@@ -1,0 +1,22 @@
+<%- include('./partials/header') %>
+<h1>Forum</h1>
+
+<div class="container">
+    <h1 class="mb-4">Forum Posts</h1>
+    <a href="/post/new" class="btn btn-success">New Post</a>
+
+    <% posts.forEach(post => { %>
+        <div class="card mt-4">
+            <div class="card-body">
+                <h4 class="card-title"> <%= post.title %></h4>
+                <div class="card-subtitle mb-2">
+                    <%= post.createdAt.toLocaleDateString() %>
+                </div>
+                <div class="card-text mb-2"><%= post.description %></div>
+            </div>
+        </div>
+    <% }) %>
+</div>
+
+
+<%- include('./partials/footer') %>
