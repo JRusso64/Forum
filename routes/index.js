@@ -1,19 +1,11 @@
 var express = require('express');
 var router = express.Router();
+const Post = require('.././models/post')
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  const posts = [{
-    title: 'Test Post',
-    createdAt: new Date(),
-    description: 'Test Description'
-  },
-  {
-    title: 'Test Post 2',
-    createdAt: new Date(),
-    description: 'Test Description 2'
-  }]
-  res.render('index', {posts: posts});
+router.get('/', async function(req, res, next) {
+  const post = await Post.find()
+  res.render('index', { posts: post })
 });
 
 
