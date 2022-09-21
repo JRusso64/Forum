@@ -38,4 +38,23 @@ router.delete('/:id', async (req, res) => {
     res.redirect('/')
 })
 
+router.put('/:id', async (req, res) => {
+    post = req.body
+    post.title = req.body.title
+    post.description = req.body.description
+
+    
+    let update = await Post.findById(req.params.id)
+
+    await Post.updateOne({_id: req.params.id}, post)
+
+    try{
+        update = await Post.save()
+        console.log('success')
+        res.redirect(`/posts/${req.params.id}`)
+    }catch(e){
+        res.redirect(`/posts/${req.params.id}`)
+    }
+})
+
 module.exports = router;
