@@ -1,7 +1,7 @@
 <%- include('./partials/header') %>
 <div class="container">
     <a href="/" class="btn btn-secondary">All Posts</a>
-    <a href="/posts/edit/" class="btn btn-info">Edit</a>
+    <a href="/posts/edit/<%= post.id %>" class="btn btn-info">Edit</a>
     <h1><%= post.title %></h1>
     <div>
         <div class="mb-2">

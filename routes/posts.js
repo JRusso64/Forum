@@ -5,7 +5,12 @@ var router = express.Router();
 
 router.get('/new', (req, res) => {
     res.render('new', { post: new Post() });
-});
+})
+
+router.get('/edit/:id', async (req, res) => {
+    const post = await Post.findById(req.params.id)
+    res.render('edit', {post: post})
+})
 
 router.get('/:id', async (req, res) => {
     let post = await Post.findById({_id: req.params.id})
