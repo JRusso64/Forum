@@ -8,11 +8,16 @@
     <% posts.forEach(post => { %>
         <div class="card mt-4">
             <div class="card-body">
-                <h4 class="card-title"> <%= post.title %></h4>
+                <h4 class="card-title"> <%= post.title %> </h4>
                 <div class="card-subtitle mb-2">
                     <%= post.createdAt.toLocaleDateString() %>
                 </div>
-                <div class="card-text mb-2"><%= post.description %></div>
+                <div class="card-text mb-2"><%= post.description %>
+                </div>
+                <a href="posts/<%= post.id %>" class="btn btn-primary">Read More</a>
+                <form action="/posts/<%= post.id %>?_method=DELETE" method="POST" class="d-inline">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
             </div>
         </div>
     <% }) %>
