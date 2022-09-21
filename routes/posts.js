@@ -1,15 +1,16 @@
 var express = require('express');
-const Post = require('../models/post')
+var Post = require('./../models/post')
 var router = express.Router();
+// var mongoose = require('mongoose');
 
 router.get('/new', (req, res) => {
     res.render('new', { post: new Post() });
 });
 
-router.get('/:id', (req, res) => {
-    const post = Post.findById(req.params.id)
-    if(post == null) redirect('/')
-    res.render('show', { post: post })
+router.get('/:id', async (req, res) => {
+    let post = await Post.findById({_id: req.params.id})
+    if(post == null) res.redirect('/')
+    res.render('show', {post: post})
 })
 
 router.post('/', async (req, res) => {
@@ -21,7 +22,8 @@ router.post('/', async (req, res) => {
         await post.save()
         res.redirect(`posts/${post.id}`)
     }catch(e){
-        res.render('posts/new', {post: post})
+        console.log(e)
+        res.render('new', {post: post})
     }
     
 });
