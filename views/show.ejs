@@ -16,26 +16,28 @@
         <p><%= post.description %></p>
     </div>
 
-    <div>
-        <br><br><h2>Comments</h2>
+    <div class="form-group">
+        <h2>Comments</h2>
         <form action="/posts/<%= post.id %>/comments" method=POST>
-        <label>Review:</label>
-        <textarea name="content"></textarea>
-        </select>
-        <input type="submit" value="Add Comment">
+            <label>Comment:</label>
+            <textarea class="form-control" name="content"></textarea>
+            </select>
+        <input class="btn btn-success" type="submit" value="Add Comment">
         </form>
     </div>
 
     <% if (post.comments.length > 0) { %>
     
     <% for(var i = 0; i < post.comments.length; i++) { %>
-        <div>
-            <form action="/posts/<%= post.id %>/<%= post.comments[i].id %>/comments" method=POST>
-                <p><%= post.comments[i].content %></p>
-                <% if(post.comments[i].user == user.id.toString()){ %>
-                <input type="submit" value="Delete">
-                <% } %>
-            </form>
+        <div class="card mt-4">
+            <div class="card-body bg-light text-black">
+                <form action="/posts/<%= post.id %>/<%= post.comments[i].id %>/comments" method=POST>
+                    <h1 class="card-text"><%= post.comments[i].content %></h1>
+                    <% if(post.comments[i].user == user.id.toString()){ %>
+                    <input class="btn btn-danger" type="submit" value="Delete">
+                    <% } %>
+                </form>
+            </div>
         </div>
     <% } } %>
     
