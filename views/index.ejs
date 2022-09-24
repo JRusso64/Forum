@@ -4,7 +4,9 @@
 <div class="container">
     <h1 class="mb-4">Forum Posts</h1>
     <a href="/posts/new" class="btn btn-success">New Post</a>
-
+    <form action="/logout?_method=DELETE" method="POST">
+        <button type="submit">Log Out</button>
+    </form>
     <% posts.forEach(post => { %>
         <div class="card mt-4">
             <div class="card-body">
@@ -15,9 +17,11 @@
                 <div class="card-text mb-2"><%= post.description %>
                 </div>
                 <a href="posts/<%= post.id %>" class="btn btn-primary">View Comments</a>
+                <% if((post.user).equals(user.id)){ %>
                 <form action="/posts/<%= post.id %>?_method=DELETE" method="POST" class="d-inline">
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
+                <% } %>
             </div>
         </div>
     <% }) %>
