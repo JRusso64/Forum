@@ -29,6 +29,7 @@ var User = require('./models/user')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var postRouter = require('./routes/posts');
+var commentsRouter = require('./routes/comment');
 
 var app = express();
 
@@ -57,6 +58,7 @@ app.use(passport.session())
 
 app.use('/users', usersRouter);
 app.use('/posts', postRouter);
+
 
 
 app.get('/', checkAuthenticated, async function(req, res, next) {

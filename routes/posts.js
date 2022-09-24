@@ -1,5 +1,6 @@
 var express = require('express');
 var Post = require('./../models/post')
+var Comments = require('./../models/comment')
 var router = express.Router();
 // var mongoose = require('mongoose');
 
@@ -67,9 +68,48 @@ router.put('/:id', checkAuthenticated, async (req, res) => {
         res.json({"auth": "Not Authorized"})
     }
 
-
-
     
+})
+
+
+router.post('/:id/comments', checkAuthenticated, async (req, res) => {
+    let post = await Post.findById(req.params.id);
+    if(req.user.id == post.user){
+        res.json({"auth": "not authorized"})
+    }else{
+        try{
+            console.log(req.body.content)
+            let comment = new Comments({
+                content: req.body.content,
+                user: req.user
+            })
+            post.comments.push(comment)
+            post.save()
+            res.redirect(`/posts/${req.params.id}`);
+        }catch(e){
+            res.redirect('/')
+        }
+    }
+});
+
+router.post('/:id/:cid/comments/', async (req, res) => {
+    
+    let post = await Post.findById(req.params.id);
+    
+    var commentArray = post.comments;
+
+    console.log(req.user.id)
+    console.log(commentArray[0].user.toString())
+    for(var i = 0; i < commentArray.length; i++){
+        if(commentArray[i].id == req.params.cid && (req.user.id) === (commentArray[i].user.toString())){
+            commentArray.splice(i, 1);
+        }
+    }
+
+    post.update({comments: commentArray})
+    await post.save()
+
+    res.redirect(`/posts/${req.params.id}`);
 })
 
 function checkAuthenticated(req, res, next){
